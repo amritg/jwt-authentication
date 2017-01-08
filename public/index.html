@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JWT-Authentication</title>
+</head>
+<body ng-app="app">
+    <div ng-controller="authenticate as auth">
+        <h1>Get Random User</h1>
+        <div>
+            <button ng-click="auth.getRamdomUser()">Get Random User</button>
+            <pre ng-bind="auth.randomUser | json"></pre>
+        </div>
+    </div>
+    <script src=""></script>
+</body>
+</html>
