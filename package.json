@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/amritg/jwt-authentication#readme",
   "dependencies": {
-    "express": "^4.14.0"
+    "express": "^4.14.0",
+    "faker": "^3.1.0"
   }
 }
