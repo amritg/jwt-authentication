@@ -13,7 +13,7 @@
 
         //Initilization
         UserFactory.getUser().then(function(response){
-            vm.user = response.data;
+            vm.loggedUser = response.data;
         });
 
         function getRandomUser(){
@@ -24,13 +24,13 @@
         function login(username,password){
             vm.errorMessage = "";
             UserFactory.login(username, password).then(function success(response){
-                vm.user = response.data.user;
+                vm.loggedUser = response.data.username;
                 console.log(response.data.token);
             }, handleError);
         }
         function logout(){
             UserFactory.logout();
-            vm.user = null;
+            vm.loggedUser = null;
         }
         function handleError(response){
             vm.errorMessage = "Username or password is incorrect";

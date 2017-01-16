@@ -6,10 +6,10 @@ var morgan = require('morgan');
 var jwt = require('jsonwebtoken');
 var expressJwt = require('express-jwt');
 
-var user = {
-    username: 'a',
-    password: 'a'
-}
+//Database Connection
+var mysql = require('./scripts/sqlCTOQueries.js');
+mysql.createPool('localhost','root','','user_credentials');
+
 var jwtSecret = 'asdf';
 
 var app = express();
@@ -28,12 +28,13 @@ app.get('/random-user',function(req, res, next){
 });
 
 app.post('/login', authenticate, function(req,res,next){
-    var token = jwt.sign({username: user.username}, jwtSecret);
-    res.send({token: token, user: user});
+    console.log(req.body);
+    var token = jwt.sign({username: req.body.username}, jwtSecret);
+    res.send({token: token, username: req.body.username});
 });
 
 app.get('/me',function(req,res,next){
-    res.send(req.user);
+    res.send(req.username);
 });
 app.listen(3000,function(){
     console.log("Application listening at => localhost:3000");
@@ -42,12 +43,22 @@ app.listen(3000,function(){
 //UTIL Functions
 function authenticate(req, res, next){
     var body = req.body;
+
     if(!body.username || !body.password){
         res.send(400).end('Must provide username or password');
+    }else{
+        var sql_getUserExtraConditions = body.username + '\" AND password =\"' + body.password +'\"';
+        mysql.readSQLDataSingle("GetUser",function(user){
+            console.log('From database');
+            console.log(user);
+            if(user.length){
+                console.log("User exists");
+                var username = body.username;
+                next(); 
+            }else{
+                console.log("Username or password is incorrect");
+                res.sendStatus(401).end('Username or password is incorrect');
+            }
+        },sql_getUserExtraConditions);
     }
-    if(body.username !== user.username || body.password !== user.password){
-        // res.send(401).end('Username or password is incorrect');
-        res.sendStatus(401).end('Username or password is incorrect');
-    }
-    next();
 }
