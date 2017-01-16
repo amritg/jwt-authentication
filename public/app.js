@@ -17,11 +17,12 @@
         });
 
         function getRandomUser(){
-            RandomUserFactory.getUser().then(function success(response){
+            RandomUserFactory.getRandomUser().then(function success(response){
                 vm.randomUser = response.data;
             },handleError);
         }
         function login(username,password){
+            vm.errorMessage = "";
             UserFactory.login(username, password).then(function success(response){
                 vm.user = response.data.user;
                 console.log(response.data.token);
@@ -32,15 +33,16 @@
             vm.user = null;
         }
         function handleError(response){
+            vm.errorMessage = "Username or password is incorrect";
             console.log('Error:' + response.data);
         }
     });
 
     app.factory('RandomUserFactory',function RandomUserFactory($http, API_URL){
         return{
-            getUser: getUser
+            getRandomUser: getRandomUser
         };
-        function getUser(){
+        function getRandomUser(){
             return $http.get(API_URL+'/random-user');
         }
     });
@@ -57,13 +59,13 @@
             });
         }
         function logout(){
-            AuthTokenFactory.setToken();
+            AuthTokenFactory.removeToken();
         }
         function getUser(){
             if(AuthTokenFactory.getToken()){
                 return $http.get(API_URL+'/me');
            }else{
-               return $q.reject({data: 'client is not authenticated'});
+               return $q.reject({data: 'Client is not authenticated'});
            }           
         }
     });
@@ -72,17 +74,17 @@
         var key = 'auth-token';
         return {
             getToken: getToken,
-            setToken: setToken
+            setToken: setToken,
+            removeToken: removeToken
         };
         function getToken(){
             return store.getItem(key);
         }
         function setToken(token){
-            if(token){
-                store.setItem(key, token);
-            }else{
-                store.removeItem(key);
-            }
+            store.setItem(key, token);
+        }
+        function removeToken(){
+            store.removeItem(key);
         }
     });
 

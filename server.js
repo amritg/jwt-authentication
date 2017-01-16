@@ -46,7 +46,8 @@ function authenticate(req, res, next){
         res.send(400).end('Must provide username or password');
     }
     if(body.username !== user.username || body.password !== user.password){
-        res.send(401).end('Username or password is incorrect');
+        // res.send(401).end('Username or password is incorrect');
+        res.sendStatus(401).end('Username or password is incorrect');
     }
     next();
 }

@@ -10,6 +10,7 @@
     <div ng-controller="Authenticate as auth">
         <h1>Get Random User</h1>
         <div ng-hide="auth.user">
+            <p ng-show="auth.errorMessage">{{auth.errorMessage}}</p>
             <form ng-submit="auth.login(auth.username,auth.password)">
                 <label>Username: <input type="text" ng-model="auth.username"/></label></br><br/>
                 <label>Password: <input type="password" ng-model="auth.password"/></label><br><br/>
