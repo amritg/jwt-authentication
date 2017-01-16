@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>JWT-Authentication</title>
-    <script src="./bower_components/angular/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
     <script src="app.js"></script>
 </head>
 <body ng-app="app">
@@ -16,6 +16,8 @@
                 <button type="submit">Login</button><br/><br/>
             </form>
         </div>
+        <h2>Welcome {{auth.user.username}}</h2>
+        <button ng-click="auth.logout()">Logout</button><br><br/>
         <div>
             <button ng-click="auth.getRandomUser()">Get Random User</button>
             <pre ng-bind="auth.randomUser | json"></pre>
