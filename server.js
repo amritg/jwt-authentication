@@ -27,9 +27,13 @@ app.get('/random-user',function(req, res, next){
     next();
 });
 
-app.post('/login', authenticate, function(req,res){
+app.post('/login', authenticate, function(req,res,next){
     var token = jwt.sign({username: user.username}, jwtSecret);
     res.send({token: token, user: user});
+});
+
+app.get('/me',function(req,res,next){
+    res.send(req.user);
 });
 app.listen(3000,function(){
     console.log("Application listening at => localhost:3000");

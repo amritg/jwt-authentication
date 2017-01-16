@@ -11,6 +11,11 @@
         vm.login = login;
         vm.logout = logout;
 
+        //Initilization
+        UserFactory.getUser().then(function(response){
+            vm.user = response.data;
+        });
+
         function getRandomUser(){
             RandomUserFactory.getUser().then(function success(response){
                 vm.randomUser = response.data;
@@ -39,10 +44,11 @@
             return $http.get(API_URL+'/random-user');
         }
     });
-    app.factory('UserFactory', function UserFactory($http, API_URL,AuthTokenFactory){
+    app.factory('UserFactory', function UserFactory($http, API_URL,AuthTokenFactory,$q){
         return {
             login: login,
-            logout: logout
+            logout: logout,
+            getUser: getUser
         };
         function login(username,password){
             return $http.post(API_URL +'/login',{username: username, password: password}).then(function (response){
@@ -52,6 +58,13 @@
         }
         function logout(){
             AuthTokenFactory.setToken();
+        }
+        function getUser(){
+            if(AuthTokenFactory.getToken()){
+                return $http.get(API_URL+'/me');
+           }else{
+               return $q.reject({data: 'client is not authenticated'});
+           }           
         }
     });
     app.factory('AuthTokenFactory', function AuthTokenFactory($window){

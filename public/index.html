@@ -9,19 +9,22 @@
 <body ng-app="app">
     <div ng-controller="Authenticate as auth">
         <h1>Get Random User</h1>
-        <div>
+        <div ng-hide="auth.user">
             <form ng-submit="auth.login(auth.username,auth.password)">
                 <label>Username: <input type="text" ng-model="auth.username"/></label></br><br/>
                 <label>Password: <input type="password" ng-model="auth.password"/></label><br><br/>
                 <button type="submit">Login</button><br/><br/>
             </form>
         </div>
-        <h2>Welcome {{auth.user.username}}</h2>
-        <button ng-click="auth.logout()">Logout</button><br><br/>
-        <div>
-            <button ng-click="auth.getRandomUser()">Get Random User</button>
-            <pre ng-bind="auth.randomUser | json"></pre>
+        <div ng-show="auth.user">
+            <h2>Welcome {{auth.user.username}}</h2>
+            <button ng-click="auth.logout()">Logout</button><br><br/>
+            <div>
+                <button ng-click="auth.getRandomUser()">Get Random User</button>
+                <pre ng-bind="auth.randomUser | json"></pre>
+            </div>
         </div>
+        
     </div>
     
 </body>
