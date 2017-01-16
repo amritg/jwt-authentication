@@ -3,15 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <title>JWT-Authentication</title>
+    <script src="./bower_components/angular/angular.min.js"></script>
+    <script src="app.js"></script>
 </head>
 <body ng-app="app">
-    <div ng-controller="authenticate as auth">
+    <div ng-controller="Authenticate as auth">
         <h1>Get Random User</h1>
         <div>
-            <button ng-click="auth.getRamdomUser()">Get Random User</button>
+            <form ng-submit="auth.login(auth.username,auth.password)">
+                <label>Username: <input type="text" ng-model="auth.username"/></label></br><br/>
+                <label>Password: <input type="password" ng-model="auth.password"/></label><br><br/>
+                <button type="submit">Login</button><br/><br/>
+            </form>
+        </div>
+        <div>
+            <button ng-click="auth.getRandomUser()">Get Random User</button>
             <pre ng-bind="auth.randomUser | json"></pre>
         </div>
     </div>
-    <script src=""></script>
+    
 </body>
 </html>
