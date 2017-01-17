@@ -1,0 +1,10 @@
+<div ng-controller="Authenticate"> 
+    <div>
+        <p>{{errorMessage}}</p>
+        <form ng-submit="login(username,password)">
+            <label>Username: <input type="text" ng-model="username"/></label></br><br/>
+            <label>Password: <input type="password" ng-model="password"/></label><br><br/>
+            <button type="submit">Login</button><br/><br/>
+        </form>
+    </div>
+</div>

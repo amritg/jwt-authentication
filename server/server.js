@@ -29,21 +29,24 @@ app.get('/random-user',function(req, res, next){
 
 app.post('/login', authenticate, function(req,res,next){
     console.log(req.body);
-    var token = jwt.sign({username: req.body.username}, jwtSecret);
+    var token = jwt.sign({
+                        exp: Math.floor(Date.now() / 1000) + 30, 
+                        username: req.body.username
+                        },jwtSecret);
     res.send({token: token, username: req.body.username});
 });
 
-app.get('/me',function(req,res,next){
-    res.send(req.username);
+app.get('/services',function(req,res,next){
+    res.send({ success: "ok"});
 });
 app.listen(3000,function(){
     console.log("Application listening at => localhost:3000");
 });
 
 //UTIL Functions
+
 function authenticate(req, res, next){
     var body = req.body;
-
     if(!body.username || !body.password){
         res.send(400).end('Must provide username or password');
     }else{

@@ -4,29 +4,11 @@
     <meta charset="UTF-8">
     <title>JWT-Authentication</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>
     <script src="app.js"></script>
 </head>
 <body ng-app="app">
-    <div ng-controller="Authenticate as auth">
-        <h1>Get Random User</h1>
-        <div ng-hide="auth.loggedUser">
-            <p ng-show="auth.errorMessage">{{auth.errorMessage}}</p>
-            <form ng-submit="auth.login(auth.username,auth.password)">
-                <label>Username: <input type="text" ng-model="auth.username"/></label></br><br/>
-                <label>Password: <input type="password" ng-model="auth.password"/></label><br><br/>
-                <button type="submit">Login</button><br/><br/>
-            </form>
-        </div>
-        <div ng-show="auth.loggedUser">
-            <h2>Welcome {{auth.username}}</h2>
-            <button ng-click="auth.logout()">Logout</button><br><br/>
-            <div>
-                <button ng-click="auth.getRandomUser()">Get Random User</button>
-                <pre ng-bind="auth.randomUser | json"></pre>
-            </div>
-        </div>
-        
-    </div>
-    
+    <h1>Get Random User</h1>
+    <ui-view></ui-view>
 </body>
 </html>
